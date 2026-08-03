@@ -1,35 +1,54 @@
+using Com.Example.Interview.Data;
+using Com.Example.Interview.Dtos;
+using Com.Example.Interview.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Com.Example.Interview.Data;
-using Com.Example.Interview.Models;
 
-namespace Com.Example.Interview.Controllers
+namespace Com.Example.Interview.Controllers;
+
+[ApiController]
+[Route("api/comments")]
+public sealed class CommentsController(ApplicationDbContext context) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CommentsController : ControllerBase
+    private const string DefaultAuthor = "Blend 285";
+
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyList<Comment>>> GetComments(CancellationToken cancellationToken)
     {
-        private readonly ApplicationDbContext _context;
+        var comments = await context.Comments
+            .OrderByDescending(comment => comment.CreatedAt)
+            .ToListAsync(cancellationToken);
 
-        public CommentsController(ApplicationDbContext context)
+        return comments;
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Comment>> GetComment(int id, CancellationToken cancellationToken)
+    {
+        var comment = await context.Comments.FindAsync([id], cancellationToken);
+
+        return comment is null ? NotFound() : comment;
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<Comment>> CreateComment(CreateCommentRequest request, CancellationToken cancellationToken)
+    {
+        var content = request.Content.Trim();
+
+        if (string.IsNullOrWhiteSpace(content))
         {
-            _context = context;
+            return BadRequest();
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Comment>>> GetComments()
+        var comment = new Comment
         {
-            return await _context.Comments.OrderByDescending(c => c.CreatedAt).ToListAsync();
-        }
+            Author = DefaultAuthor,
+            Content = content
+        };
 
-        [HttpPost]
-        public async Task<ActionResult<Comment>> PostComment(Comment comment)
-        {
-            comment.Author = "Blend 285"; 
-            _context.Comments.Add(comment);
-            await _context.SaveChangesAsync();
+        context.Comments.Add(comment);
+        await context.SaveChangesAsync(cancellationToken);
 
-            return CreatedAtAction(nameof(GetComments), new { id = comment.Id }, comment);
-        }
+        return CreatedAtAction(nameof(GetComment), new { id = comment.Id }, comment);
     }
 }

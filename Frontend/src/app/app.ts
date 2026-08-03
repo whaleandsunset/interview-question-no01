@@ -5,6 +5,6 @@ import { CommentComponent } from './components/comment/comment.component';
   selector: 'app-root',
   standalone: true,
   imports: [CommentComponent],
-  template: `<app-comment></app-comment>`
+  template: '<app-comment />'
 })
 export class App {}

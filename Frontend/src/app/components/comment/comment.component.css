@@ -1,0 +1,63 @@
+:host {
+  display: block;
+  font-family: Arial, sans-serif;
+}
+
+.comment-card {
+  max-width: 600px;
+  margin: 30px auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.comment-card__header {
+  padding: 10px 15px;
+  color: #fff;
+  font-weight: 700;
+  background: rgb(67, 116, 69);
+}
+
+.comment-card__body {
+  padding: 20px;
+}
+
+.comment-card__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.comment-card__input {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.comment-list {
+  display: grid;
+  gap: 10px;
+}
+
+.comment-item {
+  padding: 10px;
+  border-left: 4px solid #2e7d32;
+  border-radius: 4px;
+  background: #f8fafc;
+}
+
+.comment-item__author {
+  display: block;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.comment-item__content {
+  margin: 4px 0 0;
+  color: #475569;
+}

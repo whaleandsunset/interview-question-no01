@@ -1,10 +1,9 @@
-namespace Com.Example.Interview.Models
+namespace Com.Example.Interview.Models;
+
+public sealed class Comment
 {
-    public class Comment
-    {
-        public int Id { get; set; }
-        public string Author { get; set; } = "Blend 285";
-        public string Content { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    }
+    public int Id { get; set; }
+    public string Author { get; set; } = string.Empty;
+    public string Content { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

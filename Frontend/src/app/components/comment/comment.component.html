@@ -1,0 +1,22 @@
+<section class="comment-card">
+  <header class="comment-card__header">IT 08-1</header>
+
+  <div class="comment-card__body">
+    <img class="comment-card__image" src="assets/dogs.jpg" alt="Dog">
+
+    <input
+      class="comment-card__input"
+      type="text"
+      placeholder="Comment..."
+      [(ngModel)]="newCommentText"
+      (keyup.enter)="onEnterPress()"
+    >
+
+    <div class="comment-list">
+      <article class="comment-item" *ngFor="let item of comments">
+        <strong class="comment-item__author">{{ item.author }}</strong>
+        <p class="comment-item__content">{{ item.content }}</p>
+      </article>
+    </div>
+  </div>
+</section>

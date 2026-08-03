@@ -1,12 +1,9 @@
-using Microsoft.EntityFrameworkCore;
 using Com.Example.Interview.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace Com.Example.Interview.Data
+namespace Com.Example.Interview.Data;
+
+public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
-    public class ApplicationDbContext : DbContext
-    {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-
-        public DbSet<Comment> Comments { get; set; }
-    }
+    public DbSet<Comment> Comments => Set<Comment>();
 }

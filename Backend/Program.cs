@@ -1,34 +1,29 @@
 using Com.Example.Interview.Data;
 using Microsoft.EntityFrameworkCore;
 
+const string corsPolicy = "AllowAngular";
+const string frontendUrl = "http://localhost:4200";
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular",
-        policy => policy.WithOrigins("http://localhost:4200")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod());
+    options.AddPolicy(corsPolicy, policy =>
+        policy.WithOrigins(frontendUrl)
+            .AllowAnyHeader()
+            .AllowAnyMethod());
 });
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 app.UseHttpsRedirection();
 
-app.UseCors("AllowAngular");
+app.UseCors(corsPolicy);
 
 app.UseAuthorization();
 
