@@ -1,0 +1,17 @@
+# .NET
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+.vs/
+
+# Angular
+/Frontend/dist/
+/Frontend/tmp/
+/Frontend/out-tsc/
+/Frontend/node_modules/
+.angular/
+
+# OS Files
+.DS_Store
+Thumbs.db
